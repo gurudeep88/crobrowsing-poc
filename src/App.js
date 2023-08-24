@@ -4,17 +4,18 @@ import './App.css'
 import logo from './logo.svg'
 
 function App() {
-  const [sessionName, setSessionName] = useState('')
+  const [sessionName, setSessionName] = useState('');
 
-  useEffect(() => {
-    return () => {
-      coBrowsing.stopCoBrowsing()
-    }
-  }, [])
+  const handleChange = (e) => {
+    setSessionName(e.target.value);
+  }
+
+  const stopSession = () => {
+    coBrowsing.stopCoBrowsing()
+  }
 
   const startSession = () => {
     if (sessionName.trim().length === 0) alert('Please enter a room name')
-
     coBrowsing.startCoBrowsing(`User${Math.round(Math.random(100) * 100)}`, sessionName)
   }
 
@@ -40,18 +41,17 @@ function App() {
           id='room-name'
           type='text'
           value={sessionName}
-          onChange={e => {
-            const { value } = e.target
-
-            setSessionName(value)
-          }}
+          onChange={handleChange}
         />
         <button
-          onClick={() => {
-            startSession()
-          }}
+          onClick={startSession}
         >
           Start Co Browsing
+        </button>
+        <button
+          onClick={stopSession}
+        >
+          Stop Co Browsing
         </button>
       </header>
     </div>
